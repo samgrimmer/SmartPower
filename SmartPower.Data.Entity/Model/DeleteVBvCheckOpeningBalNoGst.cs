@@ -1,0 +1,23 @@
+﻿using System;
+using System.Collections.Generic;
+
+#nullable disable
+
+namespace SmartPower.Data.Entity.Model
+{
+    public partial class DeleteVBvCheckOpeningBalNoGst
+    {
+        public string RetailerCode { get; set; }
+        public int SiteNo { get; set; }
+        public string SiteType { get; set; }
+        public string SiteTypeSubCat { get; set; }
+        public string AccountNo { get; set; }
+        public string Icp { get; set; }
+        public int BatchNo { get; set; }
+        public int SpinvNumber { get; set; }
+        public double? OpeningBalanceExGst { get; set; }
+        public double? OpeningBalanceGst { get; set; }
+        public string InvNotes { get; set; }
+        public string Comments { get; set; }
+    }
+}

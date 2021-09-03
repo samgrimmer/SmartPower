@@ -1,0 +1,25 @@
+﻿@page "/bulk-reversal-input"
+
+@using global::AutoMapper
+
+@inject NavigationManager NavigationManager
+@inject IMapper Mapper
+@inject Domain.Service.IBulkReversal BulkReversalService
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/bulk-reversals">Bulk Reversals</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Bulk Reversal Input</li>
+    </ol>
+</nav>
+
+<h2>Bulk Reversal Input</h2>
+
+<EditForm Model="@BulkReversal" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <InputNumber id="orgSpin" @bind-Value="BulkReversal.OrgSpin" />
+
+    <button class="btn btn-primary" type="submit">Submit</button>
+</EditForm>

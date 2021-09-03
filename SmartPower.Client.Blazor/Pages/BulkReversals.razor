@@ -1,0 +1,68 @@
+﻿@page "/bulk-reversals"
+
+@using global::AutoMapper
+
+@inject NavigationManager NavigationManager
+@inject IMapper Mapper
+@inject Domain.Service.IBulkReversal BulkReversalService
+
+@if (!string.IsNullOrEmpty(BatchProcessedMessage))
+{
+    <Toaster Message="@BatchProcessedMessage"></Toaster>
+}
+
+<h2>Reversals Bulk</h2>
+
+@if (BulkReversalList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    @if (DirtyPendingReversals)
+    {
+        <div class="fade show" tabindex="-1" role="dialog" style="display: block;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Bulk Reversal Warning</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>@Common.Constant.BulkReversal.Message.DirtyPendingReversals</p>
+                        <p>@Common.Constant.BulkReversal.Message.DirtyPendingReversalsContinue</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" @onclick="@(async() => await BulkReversal(true))">Continue Bulk Reversal</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="CloseDialog">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-10">
+            <BulkReversalList BulkReversals="@BulkReversalList"></BulkReversalList>
+        </div>
+        <div class="col-2">
+            <ul class="nav flex-column">
+                <li class="nav-item margin-bottom">
+                    <a class="btn btn-primary" href="/csv-export">Export List</a>
+                </li>
+                <li class="nav-item margin-bottom">
+                    <button class="nav-link btn btn-primary" @onclick="@(async() => await ClearList())">Clear List</button>
+                </li>
+                <li class="nav-item margin-bottom">
+                    <button class="nav-link btn btn-primary" @onclick="@(async() => await BulkReversal(false))">Bulk Reversal</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link btn btn-primary" @onclick="NavigateToBulkReversalInput">Input</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+}
+

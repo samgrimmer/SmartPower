@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoFixture.AutoMoq" Version="4.17.0" />
+    <PackageReference Include="bunit" Version="1.2.49" />
+    <PackageReference Include="DeepEqual" Version="2.0.0" />
+    <PackageReference Include="Moq" Version="4.16.1" />
+    <PackageReference Include="NUnit" Version="3.12.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SmartPower.Client.Blazor\SmartPower.Client.Blazor.csproj" />
+    <ProjectReference Include="..\SmartPower.Common\SmartPower.Common.csproj" />
+    <ProjectReference Include="..\SmartPower.Data.Entity\SmartPower.Data.Entity.csproj" />
+    <ProjectReference Include="..\SmartPower.Domain\SmartPower.Domain.csproj" />
+    <ProjectReference Include="..\SmartPower.Dto\SmartPower.Dto.csproj" />
+  </ItemGroup>
+
+</Project>
