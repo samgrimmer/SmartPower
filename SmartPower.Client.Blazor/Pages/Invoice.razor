@@ -6,10 +6,12 @@
 
 @if (InvoiceSummary == null)
 {
-    <Toaster ErrorMessage="true" Message="@Constant.Invoice.Message.NotFound"></Toaster>
+    <Toaster AlertClass="@Common.Enumeration.AlertClass.Error.GetEnumerationDescription()" Message="@Constant.Invoice.Message.NotFound"></Toaster>
 }
 else
 {
+    <h2>Invoice - @InvoiceSummary.SpinvNumber</h2>
+
     <table class="table">
         <InvoiceRowHeader></InvoiceRowHeader>
         <tbody>

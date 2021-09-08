@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SmartPower.Dto.Response;
 
-namespace SmartPower.Client.Blazor.Shared
+namespace SmartPower.Client.Blazor.Shared.Invoice
 {
     public partial class InvoiceRow
     {

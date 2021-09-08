@@ -13,7 +13,7 @@ namespace SmartPower.Client.Blazor.Pages
         public IMapper Mapper { get; set; }
 
         [Inject]
-        public Domain.Service.IBulkReversal BulkReversalService { get; set; }
+        public Application.Entity.Repository.IBulkReversal BulkReversalRepository { get; set; }
 
         public BulkReversalInput()
         {
@@ -24,7 +24,9 @@ namespace SmartPower.Client.Blazor.Pages
 
         private async Task HandleValidSubmit()
         {
-            await BulkReversalService.CreateReversal(Common.Constant.CurrentUser, BulkReversal.OrgSpin);
+            await BulkReversalRepository.CreateReversalListItem(Common.Constant.CurrentUser, BulkReversal.OrgSpin);
+
+            await BulkReversalRepository.UpdateReversalStatus(Common.Constant.CurrentUser);
 
             NavigationManager.NavigateTo("bulk-reversals");
         }

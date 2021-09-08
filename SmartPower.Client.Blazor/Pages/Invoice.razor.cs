@@ -10,7 +10,7 @@ namespace SmartPower.Client.Blazor.Pages
         public IMapper Mapper { get; set; }
 
         [Inject] 
-        public SmartPower.Data.Entity.Repository.IInvoice InvoiceRepository { get; set; }
+        public Application.Entity.Repository.IInvoice InvoiceRepository { get; set; }
 
         [Parameter]
         public int SpInvoiceNumber { get; set; }

@@ -4,7 +4,7 @@ using Bunit;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using NUnit.Framework;
-using SmartPower.Domain.Service;
+using SmartPower.Application.Entity.Repository;
 
 namespace SmartPower.Client.Blazor.Test.Components
 {
@@ -12,8 +12,8 @@ namespace SmartPower.Client.Blazor.Test.Components
     [Category("BulkReversalList")]
     public class BulkReversalList : FixtureBase
     {
-        private Mock<IBulkReversal> _bulkReversalService;
-        private List<SmartPower.Data.Entity.Model.TReversalsBulkList> _bulkReversalModels;
+        private Mock<IBulkReversal> _bulkReversalRepository;
+        private List<Application.Entity.Model.Projection.BulkReversalSummary> _bulkReversalModels;
 
         private Bunit.TestContext _testContext;
 
@@ -22,8 +22,8 @@ namespace SmartPower.Client.Blazor.Test.Components
         {
             _testContext = new Bunit.TestContext();
 
-            _bulkReversalService = new Mock<IBulkReversal>();
-            _bulkReversalModels = CreateMany<SmartPower.Data.Entity.Model.TReversalsBulkList>(Common.Constant.ItemCount);
+            _bulkReversalRepository = new Mock<IBulkReversal>();
+            _bulkReversalModels = CreateMany<Application.Entity.Model.Projection.BulkReversalSummary>(Common.Constant.ItemCount);
         }
 
         [OneTimeTearDown]
@@ -35,10 +35,10 @@ namespace SmartPower.Client.Blazor.Test.Components
         [Test]
         public async Task Component_Renders_Expected_Reversals()
         {
-            _bulkReversalService.Setup(b => b.GetReversalList(Common.Constant.CurrentUser)).ReturnsAsync(_bulkReversalModels);
+            _bulkReversalRepository.Setup(b => b.GetBulkReversals(Common.Constant.CurrentUser)).ReturnsAsync(_bulkReversalModels);
 
             _testContext.Services.AddScoped(x => Mapper);
-            _testContext.Services.AddScoped(x => _bulkReversalService.Object);
+            _testContext.Services.AddScoped(x => _bulkReversalRepository.Object);
 
             var component = _testContext.RenderComponent<Blazor.Pages.BulkReversals>();
 
@@ -47,7 +47,7 @@ namespace SmartPower.Client.Blazor.Test.Components
 
             Assert.IsTrue(tableRows.Count == Common.Constant.ItemCount + tableHeaderRow);
 
-            _bulkReversalService.Verify(b => b.GetReversalList(Common.Constant.CurrentUser), Times.Once);
+            _bulkReversalRepository.Verify(b => b.GetBulkReversals(Common.Constant.CurrentUser), Times.Once);
         }
     }
 }

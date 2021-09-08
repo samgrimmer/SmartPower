@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using SmartPower.Data.Entity.Model.Projection;
+using SmartPower.Application.Entity.Model.Projection;
 
-namespace SmartPower.Data.Entity.Repository
+namespace SmartPower.Application.Entity.Repository
 {
     public interface IBulkReversal
     {

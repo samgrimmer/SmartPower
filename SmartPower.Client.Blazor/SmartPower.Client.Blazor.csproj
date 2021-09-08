@@ -12,9 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SmartPower.Application\SmartPower.Application.csproj" />
     <ProjectReference Include="..\SmartPower.Common\SmartPower.Common.csproj" />
-    <ProjectReference Include="..\SmartPower.Data.Entity\SmartPower.Data.Entity.csproj" />
-    <ProjectReference Include="..\SmartPower.Domain\SmartPower.Domain.csproj" />
     <ProjectReference Include="..\SmartPower.Dto\SmartPower.Dto.csproj" />
   </ItemGroup>
 

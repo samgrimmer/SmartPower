@@ -6,8 +6,8 @@ namespace SmartPower.Client.Blazor
     {
         public AutoMapper()
         {
-            CreateMap<SmartPower.Data.Entity.Model.TReversalsBulkList, Dto.Response.BulkReversal>();
-            CreateMap<SmartPower.Data.Entity.Model.Projection.InvoiceSummary, Dto.Response.InvoiceSummary>();
+            CreateMap<Application.Entity.Model.Projection.BulkReversalSummary, Dto.Response.BulkReversalSummary>();
+            CreateMap<Application.Entity.Model.Projection.InvoiceSummary, Dto.Response.InvoiceSummary>();
         }
     }
 }

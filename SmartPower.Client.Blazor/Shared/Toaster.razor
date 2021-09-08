@@ -14,19 +14,5 @@
     public string Message { get; set; }
 
     [Parameter]
-    public bool? ErrorMessage { get; set; }
-
     public string AlertClass { get; set; }
-
-    protected void OnParametersSet()
-    {
-        if (ErrorMessage.HasValue && ErrorMessage.Value)
-        {
-            AlertClass = "danger";
-        }
-        else
-        {
-            AlertClass = "success";
-        }
-    }
 }

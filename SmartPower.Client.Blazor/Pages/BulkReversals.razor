@@ -1,13 +1,15 @@
 ﻿@page "/bulk-reversals"
 
+@using SmartPower.Common
+
 @if (!string.IsNullOrEmpty(BatchProcessedMessage))
 {
-    <Toaster Message="@BatchProcessedMessage"></Toaster>
+    <Toaster AlertClass="@Common.Enumeration.AlertClass.Success.GetEnumerationDescription()" Message="@BatchProcessedMessage"></Toaster>
 }
 
 <h2>Reversals Bulk</h2>
 
-@if (BulkReversalList == null)
+@if (BulkReversalSummaryList == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -20,7 +22,7 @@ else
 
     <div class="row">
         <div class="col-10">
-            <BulkReversalList BulkReversals="@BulkReversalList"></BulkReversalList>
+            <BulkReversalList BulkReversals="@BulkReversalSummaryList"></BulkReversalList>
         </div>
         <div class="col-2">
             <ul class="nav flex-column">
@@ -31,7 +33,7 @@ else
                     <button class="nav-link btn btn-primary" @onclick="@(async() => await ClearList())">Clear List</button>
                 </li>
                 <li class="nav-item margin-bottom">
-                    <button class="nav-link btn btn-primary" @onclick="@(async() => await ValidatedBulkReversal())">Bulk Reversal</button>
+                    <button class="nav-link btn btn-primary" @onclick="@(async() => await TestSuppliedInvoices())">Bulk Reversal</button>
                 </li>
                 <li class="nav-item">
                     <button class="nav-link btn btn-primary" @onclick="NavigateToBulkReversalInput">Input</button>

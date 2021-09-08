@@ -3,6 +3,7 @@
     public static class Constant
     {
         public const string CurrentUser = "samg";
+
         public const int ItemCount = 10;
         public const string DateStringFormat = "dd/MM/yyyy h:mmtt";
 

@@ -15,9 +15,9 @@ namespace SmartPower.Client.Blazor.Pages
         public IMapper Mapper { get; set; }
 
         [Inject] 
-        public Domain.Service.IBulkReversal BulkReversalService { get; set; }
+        public Application.Entity.Repository.IBulkReversal BulkReversalRepository { get; set; }
 
-        public List<Dto.Response.BulkReversal> BulkReversalList { get; set; }
+        public List<Dto.Response.BulkReversalSummary> BulkReversalSummaryList { get; set; }
 
         public bool DirtyPendingReversals { get; set; }
 
@@ -25,14 +25,14 @@ namespace SmartPower.Client.Blazor.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            var bulkReversals = await BulkReversalService.GetReversalList(Constant.CurrentUser);
+            var bulkReversals = await BulkReversalRepository.GetBulkReversals(Constant.CurrentUser);
 
-            BulkReversalList = Mapper.Map<List<Dto.Response.BulkReversal>>(bulkReversals);
+            BulkReversalSummaryList = Mapper.Map<List<Dto.Response.BulkReversalSummary>>(bulkReversals);
         }
 
         protected async Task ClearList()
         {
-            await BulkReversalService.ClearReversals(Constant.CurrentUser);
+            await BulkReversalRepository.ClearReversals(Constant.CurrentUser);
             
             Reset();
 
@@ -41,7 +41,7 @@ namespace SmartPower.Client.Blazor.Pages
 
         protected async Task BulkReversal()
         {
-            var batchNumber = await BulkReversalService.CreateReversals(Constant.CurrentUser);
+            var batchNumber = await BulkReversalRepository.CreateReversals(Constant.CurrentUser);
 
             BatchProcessedMessage = $"{Constant.BulkReversal.Message.BatchCreatedAction} {batchNumber}";
             
@@ -50,9 +50,9 @@ namespace SmartPower.Client.Blazor.Pages
             await OnInitializedAsync();
         }
 
-        protected async Task ValidatedBulkReversal()
+        protected async Task TestSuppliedInvoices()
         {
-            DirtyPendingReversals = await BulkReversalService.ValidatePendingReversals(Constant.CurrentUser);
+            DirtyPendingReversals = await BulkReversalRepository.TestSuppliedInvoices(Constant.CurrentUser);
 
             if (!DirtyPendingReversals)
             {
