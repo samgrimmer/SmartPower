@@ -1,11 +1,5 @@
 ﻿@page "/bulk-reversals"
 
-@using global::AutoMapper
-
-@inject NavigationManager NavigationManager
-@inject IMapper Mapper
-@inject Domain.Service.IBulkReversal BulkReversalService
-
 @if (!string.IsNullOrEmpty(BatchProcessedMessage))
 {
     <Toaster Message="@BatchProcessedMessage"></Toaster>

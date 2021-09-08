@@ -1,8 +1,4 @@
-﻿@using global::AutoMapper
-@inject IMapper Mapper
-@inject Domain.Service.IBulkReversal BulkReversalService
-
-<table class="table">
+﻿<table class="table">
     <thead>
         <tr>
             <th>Results</th>
@@ -20,9 +16,19 @@
                 <td>@bulkReversal.RevResults</td>
                 <td>@bulkReversal.RevStatus</td>
                 <td>@bulkReversal.NewSpInvNumber</td>
-                <td><button title="New invoice" class="btn btn-secondary">Invoice</button></td>
+                <td>
+                    @if (bulkReversal.NewSpInvNumber.HasValue)
+                    {
+                        <a title="New invoice" class="btn btn-secondary" href="/invoice/@bulkReversal.NewSpInvNumber">Invoice</a>
+                    }
+                </td>
                 <td>@bulkReversal.OrgSpinvNumber</td>
-                <td><button title="Orginal invoice" class="btn btn-secondary">Invoice</button></td>
+                <td>
+                    @if (bulkReversal.NewSpInvNumber.HasValue)
+                    {
+                        <a title="Original invoice" class="btn btn-secondary" href="/invoice/@bulkReversal.OrgSpinvNumber">Invoice</a>
+                    }
+                </td>
             </tr>
         }
     </tbody>

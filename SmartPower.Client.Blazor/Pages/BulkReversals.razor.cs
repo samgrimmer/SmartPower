@@ -1,11 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.AspNetCore.Components;
 using SmartPower.Common;
 
 namespace SmartPower.Client.Blazor.Pages
 {
     partial class BulkReversals
     {
+        [Inject] 
+        public NavigationManager NavigationManager { get; set; }
+
+        [Inject] 
+        public IMapper Mapper { get; set; }
+
+        [Inject] 
+        public Domain.Service.IBulkReversal BulkReversalService { get; set; }
+
         public List<Dto.Response.BulkReversal> BulkReversalList { get; set; }
 
         public bool DirtyPendingReversals { get; set; }

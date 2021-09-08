@@ -31,6 +31,8 @@ namespace SmartPower.Client.Blazor
                 options.UseSqlServer(Configuration.GetConnectionString("SmartPowerDatabaseConnectionstring")));
 
             services.AddTransient<SmartPower.Data.Entity.Repository.IBulkReversal, SmartPower.Data.Entity.Repository.BulkReversal>();
+            services.AddTransient<SmartPower.Data.Entity.Repository.IInvoice, SmartPower.Data.Entity.Repository.Invoice>();
+
             services.AddTransient<Domain.Service.IBulkReversal, Domain.Service.BulkReversal>();
 
             services.AddSingleton<WeatherForecastService>();
