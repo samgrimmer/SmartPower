@@ -28,32 +28,35 @@ namespace SmartPower.Client.Blazor.Pages
             await OnInitializedAsync();
         }
 
-        protected void CloseDialog()
+        protected async Task BulkReversal()
         {
-            DirtyPendingReversals = false;
+            var batchNumber = await BulkReversalService.CreateReversals(Constant.CurrentUser);
+
+            BatchProcessedMessage = $"{Constant.BulkReversal.Message.BatchCreatedAction} {batchNumber}";
+            
+            Reset();
+
+            await OnInitializedAsync();
         }
 
-        protected async Task BulkReversal(bool dirtyPendingReversalsConfirmation)
+        protected async Task ValidatedBulkReversal()
         {
-            if (dirtyPendingReversalsConfirmation)
-            {
-                var batchNumber = await BulkReversalService.CreateReversals(Constant.CurrentUser);
+            DirtyPendingReversals = await BulkReversalService.ValidatePendingReversals(Constant.CurrentUser);
 
-                BatchProcessedMessage = $"{Constant.BulkReversal.Message.BatchCreatedAction} {batchNumber}";
-                
-                Reset();
-
-                await OnInitializedAsync();
-            }
-            else
+            if (!DirtyPendingReversals)
             {
-                DirtyPendingReversals = await BulkReversalService.ValidatePendingReversals(Constant.CurrentUser);
+                await BulkReversal();
             }
         }
 
         protected void NavigateToBulkReversalInput()
         {
             NavigationManager.NavigateTo("bulk-reversal-input");
+        }
+
+        protected void CloseDialog()
+        {
+            DirtyPendingReversals = false;
         }
 
         private void Reset()
