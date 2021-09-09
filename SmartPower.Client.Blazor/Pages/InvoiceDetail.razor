@@ -1,0 +1,13 @@
+﻿@page "/invoice/{spInvoiceNumber:int}"
+
+<BulkReversalBreadcrumbs></BulkReversalBreadcrumbs>
+
+<Invoice InvoiceIds="@InvoiceIds"></Invoice>
+
+@code
+{
+    [Parameter]
+    public int SpInvoiceNumber { get; set; }
+
+    public List<int> InvoiceIds => new List<int> { SpInvoiceNumber };
+}

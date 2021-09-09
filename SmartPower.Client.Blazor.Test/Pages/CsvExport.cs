@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
-using SmartPower.Domain.Service;
+using SmartPower.Application.Service.BulkReversal;
 using SmartPower.Client.Blazor.Pages;
 
 namespace SmartPower.Client.Blazor.Test.Pages
@@ -11,22 +11,22 @@ namespace SmartPower.Client.Blazor.Test.Pages
     [Category("CsvExport")]
     public class CsvExport : FixtureBase
     {
-        private Mock<IBulkReversal> _bulkReversalService;
+        private Mock<ICsvExport> _csvExport;
 
         private CsvExportModel _sut;
 
         [OneTimeSetUp]
         public void Setup()
         {
-            _bulkReversalService = new Mock<IBulkReversal>();
+            _csvExport = new Mock<ICsvExport>();
         }
 
         [Test]
         public async Task Page_Returns_Expected_FileContent_Result()
         {
-            _bulkReversalService.Setup(b => b.ReversalListStringExport(Common.Constant.CurrentUser)).ReturnsAsync(Common.Constant.BulkReversal.ExportStringHeaders);
+            _csvExport.Setup(b => b.GenerateCsvStringExport(Common.Constant.CurrentUser)).ReturnsAsync(Common.Constant.BulkReversal.ExportStringHeaders);
 
-            _sut = new CsvExportModel(_bulkReversalService.Object);
+            _sut = new CsvExportModel(_csvExport.Object);
 
             var result = await _sut.OnGetAsync();
 
@@ -38,10 +38,9 @@ namespace SmartPower.Client.Blazor.Test.Pages
 
             Assert.IsTrue(fileContentResult.ContentType == Common.Constant.BulkReversal.CsvExport.File.FileContentType);
             Assert.IsTrue(fileContentResult.FileDownloadName == Common.Constant.BulkReversal.CsvExport.File.FileName);
-
             Assert.IsTrue(fileContentResult.FileContents.Length > 0);
 
-            _bulkReversalService.Verify(b => b.ReversalListStringExport(Common.Constant.CurrentUser), Times.Once);
+            _csvExport.Verify(b => b.GenerateCsvStringExport(Common.Constant.CurrentUser), Times.Once);
         }
     }
 }

@@ -1,4 +1,3 @@
-using Blazored.Modal;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -25,13 +24,14 @@ namespace SmartPower.Client.Blazor
             services.AddAutoMapper(typeof(Startup));
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddBlazoredModal();
 
-            services.AddDbContext<SmartPower.Data.Entity.DbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("SmartPowerDatabaseConnectionstring")));
+            services.AddDbContext<Application.Entity.DbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("SmartPowerDatabaseConnectionstring")), ServiceLifetime.Transient);
 
-            services.AddTransient<SmartPower.Data.Entity.Repository.IBulkReversal, SmartPower.Data.Entity.Repository.BulkReversal>();
-            services.AddTransient<Domain.Service.IBulkReversal, Domain.Service.BulkReversal>();
+            services.AddTransient<Application.Entity.Repository.IBulkReversal, Application.Entity.Repository.BulkReversal>();
+            services.AddTransient<Application.Entity.Repository.IInvoice, Application.Entity.Repository.Invoice>();
+
+            services.AddTransient<Application.Service.BulkReversal.ICsvExport, Application.Service.BulkReversal.CsvExport>();
 
             services.AddSingleton<WeatherForecastService>();
         }

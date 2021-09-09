@@ -1,16 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
 
 namespace SmartPower.Common.Enumeration
 {
     public enum ReversalStatus
     {
-        [Display(Name = "Found")]
+        [Description("Found Invoice")]
         Found,
 
-        [Display(Name = "Reversal Already Exists")]
+        [Description("Reversal Already Exists")]
         ReversalAlreadyExists,
 
-        [Display(Name = "Not Found")]
+        [Description("Not Found")]
         NotFound
     }
 }

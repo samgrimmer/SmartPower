@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using NUnit.Framework;
-using SmartPower.Domain.Service;
+using SmartPower.Application.Entity.Repository;
 
 namespace SmartPower.Client.Blazor.Test.Pages
 {
@@ -12,7 +12,7 @@ namespace SmartPower.Client.Blazor.Test.Pages
     [Category("BulkReversalInput")]
     public class BulkReversalInput : FixtureBase
     {
-        private Mock<IBulkReversal> _bulkReversalService;
+        private Mock<IBulkReversal> _bulkReversalRepository;
         private Mock<NavigationManager> _navigationManger;
 
         private Bunit.TestContext _testContext;
@@ -23,7 +23,7 @@ namespace SmartPower.Client.Blazor.Test.Pages
         {
             _testContext = new Bunit.TestContext();
 
-            _bulkReversalService = new Mock<IBulkReversal>();
+            _bulkReversalRepository = new Mock<IBulkReversal>();
             _navigationManger = new Mock<NavigationManager>();
         }
 
@@ -38,10 +38,10 @@ namespace SmartPower.Client.Blazor.Test.Pages
         {
             var orgSpin = Create<int>();
 
-            _bulkReversalService.Setup(b => b.CreateReversal(Common.Constant.CurrentUser, orgSpin));
+            _bulkReversalRepository.Setup(b => b.CreateReversalListItem(Common.Constant.CurrentUser, orgSpin));
 
             _testContext.Services.AddScoped(x => Mapper);
-            _testContext.Services.AddScoped(x => _bulkReversalService.Object);
+            _testContext.Services.AddScoped(x => _bulkReversalRepository.Object);
 
             _component = _testContext.RenderComponent<Blazor.Pages.BulkReversalInput>();
 
@@ -56,7 +56,7 @@ namespace SmartPower.Client.Blazor.Test.Pages
 
             _component.Find("form").Submit();
 
-            _bulkReversalService.Verify(b => b.CreateReversal(Common.Constant.CurrentUser, orgSpin), Times.Once);
+            _bulkReversalRepository.Verify(b => b.CreateReversalListItem(Common.Constant.CurrentUser, orgSpin), Times.Once);
 
             var navigationManager = _testContext.Services.GetRequiredService<NavigationManager>();
 

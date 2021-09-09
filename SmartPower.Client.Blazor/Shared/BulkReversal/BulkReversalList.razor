@@ -1,0 +1,35 @@
+﻿<table class="table">
+    <thead>
+        <tr>
+            <th>Results</th>
+            <th>Status</th>
+            <th>NewSpInvNumber</th>
+            <th>&nbsp;</th>
+            <th>OrgSpinvNumber</th>
+            <th>&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var bulkReversal in BulkReversals)
+        {
+            <tr>
+                <td>@bulkReversal.RevResults</td>
+                <td>@bulkReversal.RevStatus</td>
+                <td>@bulkReversal.NewSpInvNumber</td>
+                <td>
+                    @if (bulkReversal.NewSpInvNumber.HasValue)
+                    {
+                        <a title="New invoice" class="btn btn-secondary" href="/invoice/@bulkReversal.NewSpInvNumber">Invoice</a>
+                    }
+                </td>
+                <td>@bulkReversal.OrgSpinvNumber</td>
+                <td>
+                    @if (bulkReversal.NewSpInvNumber.HasValue)
+                    {
+                        <a title="Original invoice" class="btn btn-secondary" href="/invoice/@bulkReversal.OrgSpinvNumber">Invoice</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

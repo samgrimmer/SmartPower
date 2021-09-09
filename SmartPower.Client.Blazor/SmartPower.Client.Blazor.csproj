@@ -7,14 +7,12 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
-    <PackageReference Include="Blazored.Modal" Version="6.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.9" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SmartPower.Application\SmartPower.Application.csproj" />
     <ProjectReference Include="..\SmartPower.Common\SmartPower.Common.csproj" />
-    <ProjectReference Include="..\SmartPower.Data.Entity\SmartPower.Data.Entity.csproj" />
-    <ProjectReference Include="..\SmartPower.Domain\SmartPower.Domain.csproj" />
     <ProjectReference Include="..\SmartPower.Dto\SmartPower.Dto.csproj" />
   </ItemGroup>
 

@@ -5,8 +5,7 @@ using Bunit;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using NUnit.Framework;
-using SmartPower.Common;
-using SmartPower.Domain.Service;
+using SmartPower.Application.Entity.Repository;
 
 namespace SmartPower.Client.Blazor.Test.Pages
 {
@@ -15,7 +14,7 @@ namespace SmartPower.Client.Blazor.Test.Pages
     public class BulkReversals : FixtureBase
     {
         private Mock<IBulkReversal> _bulkReversalService;
-        private List<SmartPower.Data.Entity.Model.TReversalsBulkList> _bulkReversalModels;
+        private List<Application.Entity.Model.Projection.BulkReversalSummary> _bulkReversalModels;
 
         private Bunit.TestContext _testContext;
 
@@ -25,7 +24,7 @@ namespace SmartPower.Client.Blazor.Test.Pages
             _testContext = new Bunit.TestContext();
 
             _bulkReversalService = new Mock<IBulkReversal>();
-            _bulkReversalModels = CreateMany<SmartPower.Data.Entity.Model.TReversalsBulkList>(Common.Constant.ItemCount);
+            _bulkReversalModels = CreateMany<SmartPower.Application.Entity.Model.Projection.BulkReversalSummary>(Common.Constant.ItemCount);
         }
 
         [OneTimeTearDown]
@@ -39,16 +38,16 @@ namespace SmartPower.Client.Blazor.Test.Pages
         {
             var batchNumber = Create<int>();
 
-            _bulkReversalService.Setup(b => b.GetReversalList(Constant.CurrentUser)).ReturnsAsync(_bulkReversalModels);
-            _bulkReversalService.Setup(b => b.CreateReversals(Constant.CurrentUser)).ReturnsAsync(batchNumber);
-            _bulkReversalService.Setup(b => b.ValidatePendingReversals(Constant.CurrentUser)).ReturnsAsync(true);
+            _bulkReversalService.Setup(b => b.GetBulkReversals(Common.Constant.CurrentUser)).ReturnsAsync(_bulkReversalModels);
+            _bulkReversalService.Setup(b => b.CreateReversals(Common.Constant.CurrentUser)).ReturnsAsync(batchNumber);
+            _bulkReversalService.Setup(b => b.TestSuppliedInvoices(Common.Constant.CurrentUser)).ReturnsAsync(true);
 
             _testContext.Services.AddScoped(x => Mapper);
             _testContext.Services.AddScoped(x => _bulkReversalService.Object);
 
             var component = _testContext.RenderComponent<Blazor.Pages.BulkReversals>();
 
-            _bulkReversalService.Verify(b => b.GetReversalList(Constant.CurrentUser), Times.Once);
+            _bulkReversalService.Verify(b => b.GetBulkReversals(Common.Constant.CurrentUser), Times.Once);
 
             var buttons = component.FindAll("button");
 
@@ -58,7 +57,7 @@ namespace SmartPower.Client.Blazor.Test.Pages
 
             bulkReversalButton.Click();
 
-            _bulkReversalService.Verify(b => b.ValidatePendingReversals(Constant.CurrentUser), Times.Once);
+            _bulkReversalService.Verify(b => b.TestSuppliedInvoices(Common.Constant.CurrentUser), Times.Once);
 
             var buttonsAfterBulkReversal = component.FindAll("button");
 
@@ -66,7 +65,7 @@ namespace SmartPower.Client.Blazor.Test.Pages
 
             bulkReversalConfirmationButton.Click();
 
-            _bulkReversalService.Verify(b => b.CreateReversals(Constant.CurrentUser), Times.Once);
+            _bulkReversalService.Verify(b => b.CreateReversals(Common.Constant.CurrentUser), Times.Once);
 
             Assert.IsTrue(component.Markup.Contains(batchNumber.ToString()));
         }
