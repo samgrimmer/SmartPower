@@ -1,4 +1,3 @@
-using Blazored.Modal;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -27,7 +26,7 @@ namespace SmartPower.Client.Blazor
             services.AddServerSideBlazor();
 
             services.AddDbContext<Application.Entity.DbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("SmartPowerDatabaseConnectionstring")));
+                options.UseSqlServer(Configuration.GetConnectionString("SmartPowerDatabaseConnectionstring")), ServiceLifetime.Transient);
 
             services.AddTransient<Application.Entity.Repository.IBulkReversal, Application.Entity.Repository.BulkReversal>();
             services.AddTransient<Application.Entity.Repository.IInvoice, Application.Entity.Repository.Invoice>();

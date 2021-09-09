@@ -1,13 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
 
 namespace SmartPower.Common.Enumeration
 {
     public enum AlertClass
     {
-        [Display(Name = "success")]
+        [Description("success")]
         Success,
 
-        [Display(Name = "danger")]
-        Error
+        [Description("danger")]
+        Error,
+
+        [Description("warning")]
+        Warning
     }
 }

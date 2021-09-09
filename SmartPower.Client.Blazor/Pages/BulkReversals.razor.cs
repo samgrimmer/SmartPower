@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Components;
 using SmartPower.Common;
+using SmartPower.Common.Enumeration;
 
 namespace SmartPower.Client.Blazor.Pages
 {
@@ -14,10 +16,12 @@ namespace SmartPower.Client.Blazor.Pages
         [Inject] 
         public IMapper Mapper { get; set; }
 
-        [Inject] 
+        [Inject]
         public Application.Entity.Repository.IBulkReversal BulkReversalRepository { get; set; }
 
         public List<Dto.Response.BulkReversalSummary> BulkReversalSummaryList { get; set; }
+
+        public List<int> InvoiceIds { get; set; }
 
         public bool DirtyPendingReversals { get; set; }
 
@@ -28,6 +32,15 @@ namespace SmartPower.Client.Blazor.Pages
             var bulkReversals = await BulkReversalRepository.GetBulkReversals(Constant.CurrentUser);
 
             BulkReversalSummaryList = Mapper.Map<List<Dto.Response.BulkReversalSummary>>(bulkReversals);
+
+            InitInvoiceIds();
+        }
+
+        public void InitInvoiceIds()
+        {
+            InvoiceIds = BulkReversalSummaryList
+                .Where(i => i.RevStatus == ReversalStatus.Found.GetEnumerationDescription() && i.RevResults == null && i.OrgSpinvNumber.HasValue)
+                    .Select(i => i.OrgSpinvNumber.Value).ToList();
         }
 
         protected async Task ClearList()

@@ -17,7 +17,7 @@ else
 {
     @if (DirtyPendingReversals)
     {
-        <BulkReversalConfirmation OnClose="CloseDialog" OnContinue="@(async() => await BulkReversal())"></BulkReversalConfirmation>
+        <BulkReversalConfirmation OnClose="CloseDialog" OnContinue="@(async() => await BulkReversal())" InvoiceIds="@InvoiceIds"></BulkReversalConfirmation>
     }
 
     <div class="row">

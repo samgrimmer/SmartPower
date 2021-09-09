@@ -1,0 +1,38 @@
+﻿@using SmartPower.Common
+
+@if (InvoiceSummaryList != null && InvoiceSummaryList.Any())
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Invoice Number</th>
+            <th>Sp Invoice Number</th>
+            <th>Batch No</th>
+            <th>Site No</th>
+            <th>Retailer Code</th>
+            <th>Invoice Opening Balance</th>
+            <th>Invoice Start Date</th>
+            <th>Invoice End Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var invoiceSummary in InvoiceSummaryList)
+        {
+            <tr>
+                <td>@invoiceSummary.InvNumber</td>
+                <td>@invoiceSummary.SpinvNumber</td>
+                <td>@invoiceSummary.BatchNo</td>
+                <td>@invoiceSummary.SiteNo</td>
+                <td>@invoiceSummary.RetailerCode</td>
+                <td>@invoiceSummary.InvOpeningBalance.ToCurrency()</td>
+                <td>@invoiceSummary.InvStartDate?.ToString(Constant.DateStringFormat)</td>
+                <td>@invoiceSummary.InvEndDate?.ToString(Constant.DateStringFormat)</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <Toaster AlertClass="@Common.Enumeration.AlertClass.Error.GetEnumerationDescription()" Message="@Constant.Invoice.Message.NotFound"></Toaster>
+}
